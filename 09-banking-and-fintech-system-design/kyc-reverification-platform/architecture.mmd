@@ -1,0 +1,12 @@
+flowchart LR
+ S[Scheduler / Profile Events] --> E[Eligibility Engine]
+ E --> DB[(Campaign Database)]
+ DB --> Q[(Work Queue)]
+ Q --> W[Throttled Workers]
+ W --> MSG[Notification Service]
+ W --> VER[Verification Service]
+ VER --> EXT[Verification Providers]
+ VER --> DB
+ MSG --> PREF[Preferences / Suppression]
+ DB --> OPS[Operations Dashboard]
+ DB --> AUD[(Audit History)]

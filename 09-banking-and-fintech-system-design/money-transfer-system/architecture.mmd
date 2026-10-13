@@ -1,0 +1,13 @@
+flowchart LR
+ C[Client] --> API[Transfer API]
+ API --> IAM[Authentication and Authorization]
+ API --> IDEM[(Idempotency Store)]
+ API --> TX[Transfer Service]
+ TX --> LEDGER[(Ledger Database)]
+ TX --> OUTBOX[(Transactional Outbox)]
+ OUTBOX --> PUB[Publisher]
+ PUB --> BUS[(Event Stream)]
+ TX --> EXT[Payment Provider]
+ EXT --> REC[Reconciliation Worker]
+ REC --> LEDGER
+ TX --> OBS[Audit and Telemetry]

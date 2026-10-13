@@ -1,0 +1,14 @@
+flowchart LR
+ C[Customer App] --> API[Onboarding API]
+ API --> WF[Workflow Service]
+ WF --> DB[(KYC Case Database)]
+ API --> DOC[Document Service]
+ DOC --> OBJ[(Private Object Storage)]
+ WF --> O[(Outbox)]
+ O --> BUS[(Event Bus)]
+ BUS --> CHECK[Verification Workers]
+ CHECK --> EXT[Verification Providers]
+ CHECK --> DB
+ DB --> REV[Reviewer Console]
+ WF --> AUD[(Audit History)]
+ WF --> N[Notifications]

@@ -1,0 +1,12 @@
+flowchart LR
+ C[Client] --> EDGE[Edge Cache]
+ EDGE --> API[Redirect API]
+ API --> CACHE[(Distributed Cache)]
+ CACHE -->|Miss| DB[(URL Mapping Database)]
+ DB --> CACHE
+ API --> R[HTTP Redirect]
+ API --> EVT[(Click Event Stream)]
+ EVT --> A[Analytics Consumers]
+ W[Create URL API] --> V[Validation and Abuse Checks]
+ V --> KEY[Key Generator]
+ KEY --> DB

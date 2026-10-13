@@ -1,0 +1,14 @@
+flowchart LR
+ P[Product Services] --> API[Notification API]
+ API --> DB[(Notification Jobs)]
+ API --> O[(Outbox)]
+ O --> Q[(Queue)]
+ Q --> W[Channel Workers]
+ W --> PREF[Preferences]
+ W --> RATE[Rate Limiter]
+ W --> EXT[Email / SMS / Push]
+ EXT --> CB[Delivery Callbacks]
+ CB --> DB
+ W --> RETRY[Retry Scheduler / DLQ]
+ RETRY --> Q
+ DB --> OBS[Metrics and Tracing]

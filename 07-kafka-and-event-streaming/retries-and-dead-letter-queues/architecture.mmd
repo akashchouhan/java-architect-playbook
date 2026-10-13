@@ -1,0 +1,12 @@
+flowchart LR
+ K[(Main Topic)] --> C[Consumer Group]
+ C --> P[Validate and Process Idempotently]
+ P -->|Success| COM[Commit Progress]
+ P -->|Transient Error| F[Failure Classifier]
+ F --> R[(Retry Topic / Scheduler)]
+ R --> C
+ F -->|Permanent or Exhausted| D[(Dead-Letter Topic)]
+ D --> T[Secure Triage]
+ T --> RP[Approved Replay Tool]
+ RP --> K
+ C --> M[Lag, Age, Attempts, Error Metrics]
