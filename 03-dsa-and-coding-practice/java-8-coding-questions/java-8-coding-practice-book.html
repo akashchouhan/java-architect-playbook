@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Java 8 Coding Practice Book – 445 Interview Coding Questions</title>
+<style>
+:root{--bg:#f4f7fb;--paper:#fff;--ink:#172033;--muted:#5d6b82;--line:#dce4ef;--blue:#2457d6;--green:#087f5b;--purple:#7048e8;--orange:#b85c00;--code:#f3f6fa;--codeink:#172033}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.6 Inter,Segoe UI,Arial,sans-serif}
+header{background:linear-gradient(120deg,#10234a,#2457d6);color:white;padding:42px max(22px,calc((100% - 1180px)/2))}
+header h1{font-size:clamp(28px,4vw,44px);line-height:1.12;margin:0 0 12px}header p{max-width:850px;color:#dce8ff;margin:0}
+.wrap{max-width:1180px;margin:24px auto;padding:0 18px;display:grid;grid-template-columns:270px minmax(0,1fr);gap:22px}
+nav,.intro,.question,.appendix{background:var(--paper);border:1px solid var(--line);border-radius:14px;box-shadow:0 4px 16px #15284a0a}
+nav{padding:18px;position:sticky;top:14px;height:max-content;max-height:calc(100vh - 28px);overflow:auto}
+nav h2{font-size:16px;margin:0 0 10px}nav a{display:block;padding:6px 8px;border-radius:7px;color:#34445e;text-decoration:none;font-size:13px}nav a:hover{background:#edf3ff;color:var(--blue)}
+main{min-width:0}.intro,.appendix{padding:22px;margin-bottom:18px}.stats{display:flex;gap:10px;flex-wrap:wrap;margin:16px 0}.stat{padding:9px 13px;border-radius:9px;background:#edf3ff;color:#183c91;font-weight:700}
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;margin:16px 0}.toolbar input,.toolbar select{border:1px solid var(--line);border-radius:9px;padding:10px 12px;background:white;color:var(--ink);min-width:170px}
+.chapter-title{margin:26px 0 12px;font-size:23px}.question{padding:19px;margin:12px 0;scroll-margin-top:12px}.qhead{display:flex;align-items:center;gap:9px}.qnum{font-weight:800;color:var(--blue);font-size:12px;letter-spacing:.07em}.tag{font-size:11px;border-radius:999px;padding:3px 9px;background:#eef2ff;color:#4c3bb5}
+.question h3{margin:5px 0 7px;font-size:19px}.problem{color:var(--muted);margin:0 0 12px}.meta{display:flex;gap:12px;flex-wrap:wrap;font-size:13px;color:#40516a;margin:10px 0 13px}.meta code{background:#f0f3f8;padding:3px 6px;border-radius:5px}
+details{border-top:1px solid var(--line);padding:9px 0}summary{cursor:pointer;font-weight:700;color:#34445e}.java8{color:var(--green)}.java7{color:var(--purple)}
+pre{overflow:auto;background:var(--code);color:var(--codeink);border:1px solid #dbe3ee;padding:15px;border-radius:9px;font:12.5px/1.6 Consolas,Monaco,monospace;white-space:pre-wrap;overflow-wrap:anywhere}code{font-family:Consolas,Monaco,monospace}
+.note{padding:12px 14px;border-left:4px solid var(--orange);background:#fff7ed;border-radius:7px;color:#663c12}
+footer{text-align:center;color:var(--muted);padding:35px 15px}
+
+/* Responsive book navigation and reading layout */
+.contents-actions{grid-column:1/-1;display:flex;align-items:center;gap:12px;margin:0 0 -8px}
+.contents-actions button{border:1px solid var(--line);border-radius:9px;background:#fff;color:#243653;padding:9px 13px;font:600 13px/1.2 Inter,Segoe UI,Arial,sans-serif;min-height:40px;cursor:pointer;box-shadow:0 2px 8px #15284a0a}
+.contents-actions button:hover{background:#edf3ff;border-color:#b9c9ed;color:var(--blue)}
+.contents-hint{font-size:12px;color:var(--muted)}
+.wrap.contents-hidden{grid-template-columns:minmax(0,1fr)}
+.wrap.contents-hidden #bookNav{display:none}
+.nav-head{margin-bottom:10px}
+.nav-head h2{margin:0 0 3px}
+.nav-head p{margin:0;color:var(--muted);font-size:12px;line-height:1.4}
+.navlinks{display:flex;flex-direction:column;gap:2px}
+.navlinks>a,.nav-chapter>summary{display:block;padding:8px 9px;border-radius:8px;color:#34445e;text-decoration:none;font-size:13px;line-height:1.4;cursor:pointer;min-height:36px}
+.navlinks>a:hover,.nav-chapter>summary:hover{background:#edf3ff;color:var(--blue)}
+.nav-chapter{border:0;padding:0;margin:0}
+.nav-chapter>summary{font-weight:700;color:#20375f;list-style-position:inside;background:#f6f8fc}
+.nav-chapter[open]>summary{background:#edf3ff;color:var(--blue)}
+.nav-subitems{margin:5px 0 8px 13px;padding:2px 0 2px 10px;border-left:2px solid #dce4ef;display:flex;flex-direction:column;gap:2px}
+.nav-subitems>a{display:block;padding:8px 9px;border-radius:7px;color:#52627a;text-decoration:none;font-size:12px;line-height:1.4;min-height:36px}
+.nav-subitems>a:hover{background:#f2efff;color:#7048e8}
+.nav-subitems>a.nav-overview{font-weight:700;color:#33496d}
+@media(max-width:900px){
+ .wrap{grid-template-columns:minmax(0,1fr);gap:14px;margin:16px auto;padding:0 14px}
+ #bookNav{position:relative;top:auto;grid-column:1;grid-row:2;width:100%;max-height:min(65vh,560px);overflow:auto}
+ main{grid-column:1;grid-row:3;min-width:0}
+ .contents-actions{grid-row:1;margin:0}
+ .intro,.appendix{padding:18px}
+ .question{padding:16px}
+ nav{padding:15px}
+}
+@media(max-width:600px){
+ body{font-size:14px;line-height:1.55}
+ header{padding:27px 17px}
+ header h1{font-size:clamp(25px,8vw,34px)}
+ header p{font-size:13px}
+ .wrap{padding:0 10px;margin:12px auto;gap:11px}
+ .contents-actions button{min-height:44px;padding:11px 14px}
+ .contents-hint{font-size:11px}
+ .intro,.appendix{padding:14px;border-radius:11px}
+ .question{padding:13px;margin:10px 0;border-radius:11px}
+ .question h3{font-size:17px;line-height:1.35}
+ .chapter-title{font-size:21px;margin:21px 0 10px}
+ .group-title{font-size:16px;padding:10px 12px;margin:20px 0 8px}
+ .toolbar{gap:8px}
+ .toolbar input,.toolbar select{min-width:0;width:100%;max-width:100%;font-size:14px}
+ .toolbar button{min-height:42px;flex:1}
+ .meta{gap:7px;font-size:12px}
+ pre{font-size:12px;padding:12px;white-space:pre;overflow-wrap:normal;overflow-x:auto;-webkit-overflow-scrolling:touch}
+ details{padding:8px 0}
+ summary{font-size:13px}
+ nav{max-height:62vh;padding:13px}
+ .navlinks>a,.nav-chapter>summary{min-height:44px;padding:11px 9px}
+ .nav-subitems>a{min-height:44px;padding:11px 9px}
+ .stats{gap:7px}
+ .stat{font-size:12px;padding:8px 10px}
+}
+
+@media print{body{background:white}.wrap{display:block}nav,.toolbar,.contents-actions{display:none}.question{break-inside:avoid;box-shadow:none}.question details{display:block}.question details>summary{display:none}pre{white-space:pre-wrap}}
+
+.sample-input{border-left:4px solid #087f5b;padding-left:10px;background:#f4fbf8;border-radius:7px}.sample-input summary{color:#087f5b}
+
+.sample-output{border-left:4px solid #2563eb;padding-left:10px;background:#f4f7ff;border-radius:7px}.sample-output summary{color:#1d4ed8}
+
+.group-title{margin:24px 0 10px;padding:12px 14px;border-left:5px solid #7048e8;background:#f2efff;border-radius:8px;color:#352078;font-size:18px;scroll-margin-top:12px}.group-subtitle{margin:0 0 10px;color:#5d6b82;font-size:13px}.subnav{padding-left:18px!important;font-size:12px!important;color:#52627a!important}.subnav:hover{background:#f2efff!important;color:#7048e8!important}
+</style>
+</head>
+<body>
+<header><h1>Java 8 Coding Practice Book</h1><p>445 coding problems for Senior Java Developer interviews — sample inputs, expected outputs, Java 8 solutions, Java 7-compatible equivalents and focused coding notes.</p></header>
+<div class="wrap">
+<div class="contents-actions">
+<button aria-controls="bookNav" aria-expanded="true" id="contentsToggle" type="button">Hide contents</button>
+<span class="contents-hint">Book navigation</span>
+</div>
+<nav aria-label="Book contents" id="bookNav">
+<div class="nav-head"><h2>Book contents</h2><p>Choose a chapter. Expand chapters to browse their question groups and interview-focused additions.</p></div>
+<div class="navlinks">
+<details class="nav-chapter">
+<summary>1. String Programming (67)</summary>
+<div class="nav-subitems">
+<a class="nav-overview" href="#chapter-1">Chapter overview and original programs (Q001–Q015)</a>
+<a class="subnav" href="#string-group-a">Group A: Fundamentals &amp; manipulation (S016–S025)</a>
+<a class="subnav" href="#string-group-b">Group B: Frequency &amp; anagrams (S026–S031)</a>
+<a class="subnav" href="#string-group-c">Group C: Sliding window &amp; palindromes (S032–S038)</a>
+<a class="subnav" href="#string-group-d">Group D: String search &amp; pattern matching (S039–S045)</a>
+<a class="subnav" href="#string-group-e">Group E: Dynamic programming (S046–S052)</a>
+<a class="subnav" href="#string-group-f">Group F: Parsing, encoding &amp; conversion (S053–S064)</a>
+<a class="subnav" href="#string-group-g">Group G: Advanced string structures (S065–S067)</a>
+</div></details>
+<details class="nav-chapter"><summary>2. Arrays and Collections (64)</summary><div class="nav-subitems"><a class="nav-overview" href="#chapter-2">Chapter overview and original programs (Q016–Q030)</a><a class="subnav" href="#array-group-a">Group A: Array manipulation and in-place algorithms (AC001–AC013)</a><a class="subnav" href="#array-group-b">Group B: Prefix sums, subarrays and two pointers (AC014–AC022)</a><a class="subnav" href="#array-group-c">Group C: Searching, sorting and binary search (AC023–AC028)</a><a class="subnav" href="#array-group-d">Group D: Matrix coding problems (AC029–AC036)</a><a class="subnav" href="#array-group-e">Group E: Hashing and frequency-based arrays (AC037–AC041)</a><a class="subnav" href="#array-group-f">Group F: Java Collections, Stack, Queue and Heap (AC042–AC049)</a></div></details>
+<details class="nav-chapter"><summary>3. Numbers and Mathematics (55)</summary><div class="nav-subitems">
+<a class="nav-overview" href="#chapter-3">Original core programs (Q031–Q040)</a>
+<a class="subnav" href="#number-group-a">Group A: Integer and digit manipulation (NM011–NM018)</a>
+<a class="subnav" href="#number-group-b">Group B: GCD, LCM, divisibility and factors (NM019–NM026)</a>
+<a class="subnav" href="#number-group-c">Group C: Prime numbers and factorization (NM027–NM034)</a>
+<a class="subnav" href="#number-group-d">Group D: Powers, roots and mathematical algorithms (NM035–NM040)</a>
+<a class="subnav" href="#number-group-e">Group E: Combinatorics and mathematical problem solving (NM041–NM047)</a>
+<a class="subnav" href="#number-group-f">Group F: Bit manipulation with numbers (NM048–NM055)</a>
+</div></details>
+<a href="#chapter-4">4. Java 8 Stream API (40)</a>
+<a href="#chapter-5">5. Collectors and Grouping (17)</a>
+<a href="#chapter-6">6. Employee-Based Problems (17)</a>
+<a href="#chapter-7">7. Lambda, Functional Interfaces and Optional (9)</a>
+<a href="#chapter-8">8. Advanced Java 8 Challenges (10)</a>
+<a href="#chapter-9">9. Star, Number and Alphabet Patterns (17)</a>
+<a href="#chapter-10">10. DSA Coding Patterns (22)</a>
+<a href="#chapter-11">11. Recursion, Linked Lists and Trees (12)</a>
+<a href="#chapter-12">12. Advanced Java Coding and Concurrency (7)</a>
+<a href="#appendix">Appendix &amp; setup</a>
+<a href="#chapter-13">13. Stream API Deep Dive (32)</a>
+<a href="#chapter-14">14. Collectors Deep Dive (30)</a>
+<a href="#chapter-15">15. Optional Deep Dive (29)</a>
+<a href="#chapter-16">16. Functional Interfaces Deep Dive (17)</a>
+</div></nav>
+<main>
+<section class="intro">
+<h2>How to use this book</h2>
+<p>Try each problem before opening its solution. Chapters 1–4 now include complete, independently runnable Java classes with public static void main(String[] args), sample data, expected output, Java 8 programs, Java 7-compatible programs and problem-specific notes. Later chapters retain their existing formats and shared models.</p>
+<div class="stats"><span class="stat">445 questions</span><span class="stat">16 chapters</span><span class="stat">Java 7 equivalents in audited chapters</span><span class="stat">Senior interview focus</span></div>
+<div class="note">Chapters 1–4 include complete Java 8 and Java 7-compatible programs. Chapters 5–16 have been expanded with additional interview-critical problems, complete runnable examples, sample inputs, expected outputs and Java 7-compatible equivalents. Java 7 compiler validation is not claimed where an actual JDK 7 compiler is unavailable.</div>
+<div class="toolbar"><input id="search" placeholder="Search questions or concepts…" type="search"/><select id="chapterFilter"><option value="">All chapters</option><option value="String Programming">String Programming</option><option value="Arrays and Collections">Arrays and Collections</option><option value="Numbers and Mathematics">Numbers and Mathematics</option><option value="Java 8 Stream API">Java 8 Stream API</option><option value="Collectors and Grouping">Collectors and Grouping</option><option value="Employee-Based Problems">Employee-Based Problems</option><option value="Lambda, Functional Interfaces and Optional">Lambda, Functional Interfaces and Optional</option><option value="Advanced Java 8 Challenges">Advanced Java 8 Challenges</option><option value="Star, Number and Alphabet Patterns">Star, Number and Alphabet Patterns</option><option value="DSA Coding Patterns">DSA Coding Patterns</option><option value="Recursion, Linked Lists and Trees">Recursion, Linked Lists and Trees</option><option value="Advanced Java Coding and Concurrency">Advanced Java Coding and Concurrency</option><option value="Java 8 Stream API – Deep Dive">Java 8 Stream API – Deep Dive</option><option value="Collectors – Deep Dive">Collectors – Deep Dive</option><option value="Optional – Deep Dive">Optional – Deep Dive</option><option value="Lambda and Functional Interfaces – Coding Deep Dive">Lambda and Functional Interfaces – Coding Deep Dive</option></select><button onclick="document.querySelectorAll('.question details').forEach(d=&gt;d.open=true)">Expand all</button><button onclick="document.querySelectorAll('.question details').forEach(d=&gt;d.open=false)">Collapse all</button></div>
+<p aria-live="polite" id="count"></p>
+<p class="note input-convention">Input convention: each question provides sample input / test data as Java variable declarations or data-structure setup. The snippets operate on those variables; they do not all read from the console with Scanner.</p><div class="note">Version 2.0 coding expansion: 100 additional Java 8 exercises (Streams, Collectors, Optional and functional interfaces). Examples are deliberately Java 8 compatible; do not substitute newer APIs such as Optional.stream(), Collectors.filtering(), Collectors.teeing(), Stream.toList() or Map.of(). All new exercises include concrete test data, expected output and an imperative Java 7 equivalent.</div></section>
+<h2 class="chapter-title" id="chapter-1">Chapter 1 – String Programming</h2>
+<article class="question" data-chapter="String Programming" data-type="String" id="q1">
+<div class="qhead"><span class="qnum">Q001</span><span class="tag">String</span></div>
+<h3>Reverse a string using Java 8 Streams</h3>
+<p class="problem">Reverse characters without using StringBuilder in the Java 8 approach.</p>
+<div class="meta"><span><b>Complexity:</b> O(n) time. Java 8 creates an output string of O(n) space; the Java 7 char-array implementation uses O(n) mutable storage.</span></div>
+<details class="sample-input" open=""><summary>Sample input / test data</summary><pre><code>String s = "hello";</code></pre></details><details class="sample-output" open=""><summary>Expected output</summary><pre><code>olleh</code></pre></details><details open=""><summary><span class="java8">Java 8 complete runnable program</span></summary><pre><code>import java.util.*;
+import java.util.stream.*;
+import java.util.function.*;
+import java.math.*;
+import java.util.regex.*;
+import java.text.*;
+
+public class ReverseStringJava8 {
+
+    public static void main(String[] args) {
+        reverseString();
+    }
+
+private static void reverseString() {
+    String s = "hello";
+    String reversed = IntStream.range(0, s.length())
+        .mapToObj(i -&gt; String.valueOf(s.charAt(s.length() - 1 - i)))
+        .collect(Collectors.joining());
+    System.out.println(reversed);
+}
+}
+</code></pre></details>
+<details><summary><span class="java7">Java 7 complete runnable program</span></summary><pre><code>import java.util.*;
+import java.math.*;
+import java.util.regex.*;
+import java.text.*;
+
+public class ReverseStringJava7 {
+
+    public static void main(String[] args) {
+        reverseString();
+    }
+
+private static void reverseString() {
+    String s = "hello";
+    char[] chars = s.toCharArray();
+    for (int i = 0, j = chars.length - 1; i &lt; j; i++, j--) {
+        char temp = chars[i]; chars[i] = chars[j]; chars[j] = temp;
+    }
+    System.out.println(new String(chars));
+}
+}
+</code></pre></details>
+<details><summary>Explanation and edge cases</summary>
+<p><b>Approach:</b> The Java 8 solution creates indexes from zero to length minus one and reads the source characters in reverse order. The Java 7 solution swaps symmetric characters with two pointers. Both operate on UTF-16 char values, not full grapheme clusters.</p><p><b>Edge cases:</b> Empty and one-character strings return unchanged. Null is outside this example contract and should be rejected before calling the method. Supplementary Unicode characters require code-point-aware reversal.</p><p><b>Interview follow-up:</b> How would you reverse by Unicode code point? How does StringBuilder.reverse() differ from this implementation?</p><p><b>Complexity:</b> O(n) time. Java 8 creates an output string of O(n) space; the Java 7 char-array implementation uses O(n) mutable storage.</p></details>
+</article>
+<article class="question" data-chapter="String Programming" data-type="String" id="q2">
+<div class="qhead"><span class="qnum">Q002</span><span class="tag">String</span></div>
+<h3>Reverse each word in a sentence</h3>
+<p class="problem">Reverse each token while retaining word order.</p>
+<div class="meta"><span><b>Complexity:</b> O(n) time and O(n) output/intermediate space.</span></div>
+<details class="sample-input" open=""><summary>Sample input / test data</summary><pre><code>String sentence = "Java   is fun";</code></pre></details><details class="sample-output" open=""><summary>Expected output</summary><pre><code>avaJ si nuf</code></pre></details><details open=""><summary><span class="java8">Java 8 complete runnable program</span></summary><pre><code>import java.util.*;
+import java.util.stream.*;
+import java.util.function.*;
+import java.math.*;
+import java.util.regex.*;
+import java.text.*;
+
+public class ReverseEachWordInSentenceJava8 {
+
+    public static void main(String[] args) {
+        reverseEachWordInSentence();
+    }
+
+private static void reverseEachWordInSentence() {
+    String sentence = "Java   is fun";
+    String result = sentence.trim().isEmpty() ? "" :
+        Arrays.stream(sentence.trim().split("\\s+"))
+            .map(word -&gt; new StringBuilder(word).reverse().toString())
+            .collect(Collectors.joining(" "));
+    System.out.println(result);
+}
+}
+</code></pre></details>
+<details><summary><span class="java7">Java 7 complete runnable program</span></summary><pre><code>import java.util.*;
+import java.math.*;
+import java.util.regex.*;
+import java.text.*;
+
+public class ReverseEachWordInSentenceJava7 {
+
+    public static void main(String[] args) {
+        reverseEachWordInSentence();
+    }
+
+private static void reverseEachWordInSentence() {
+    String sentence = "Java   is fun";
+    StringBuilder result = new StringBuilder();
+    String trimmed = sentence.trim();
+    if (!trimmed.isEmpty()) {
+        String[] words = trimmed.split("\\s+");
+        for (int i = 0; i &lt; words.length; i++) {
+            if (i &gt; 0) result.append(" ");
+            result.append(new StringBuilder(words[i]).reverse());
+        }
+    }
+    System.out.println(result.toString());
+}
+}
+</code></pre></details>
+<details><summary>Explanation and edge cases</summary>
+<p><b>Approach:</b> Trim the sentence, split on one-or-more whitespace characters, reverse each token, and join tokens with one space. This deliberately normalizes repeated whitespace instead of preserving exact spacing.</p><p><b>Edge cases:</b> Empty or whitespace-only input produces an empty string. Null must be rejected. If preserving original whitespace positions is required, tokenize whitespace and words separately.</p><p><b>Interview follow-up:</b> How would you preserve multiple spaces and tabs exactly? What is the complexity if StringBuilder is used for each word?</p><p><b>Complexity:</b> O(n) time and O(n) output/intermediate space.</p></details>
+</article>
+<article class="question" data-chapter="String Programming" data-type="String" id="q3">
+<div class="qhead"><span class="qnum">Q003</span><span class="tag">String</span></div>
+<h3>Find duplicate characters in a string</h3>
+<p class="problem">Return characters that occur more than once.</p>
+<div class="meta"><span><b>Complexity:</b> O(n) expected time and O(k) space for k distinct char values.</span></div>
+<details class="sample-input" open=""><summary>Sample input / test data</summary><pre><code>String s = "apple";</code></pre></details><details class="sample-output" open=""><summary>Expected output</summary><pre><code>[p]</code></pre></details><details open=""><summary><span class="java8">Java 8 complete runnable program</span></summary><pre><code>import java.util.*;
+import java.util.stream.*;
+import java.util.function.*;
+import java.math.*;
+import java.util.regex.*;
+import java.text.*;
+
+public class FindDuplicateCharactersInStringJava8 {
+
+    public static void main(String[] args) {
+        findDuplicateCharactersInString();
+    }
+
+private static void findDuplicateCharactersInString() {
+    String s = "apple";
+    Map&lt;Character, Long&gt; frequency = s.chars().mapToObj(ch -&gt; (char) ch)
+        .collect(Collectors.groupingBy(Function.identity(), LinkedHashMap::new, Collectors.counting()));
+    List&lt;Character&gt; duplicates = frequency.entrySet().stream()
+        .filter(e -&gt; e.getValue() &gt; 1).map(Map.Entry::getKey).collect(Collectors.toList());
+    System.out.println(duplicates);
+}
+}
+</code></pre></details>
+<details><summary><span class="java7">Java 7 complete runnable program</span></summary><pre><code>import java.util.*;
+import java.math.*;
+import java.util.regex.*;
+import java.text.*;
+
+public class FindDuplicateCharactersInStringJava7 {
+
+    public static void main(String[] args) {
+        findDuplicateCharactersInString();
+    }
+
+private static void findDuplicateCharactersInString() {
+    String s = "apple";
+    Map&lt;Character, Integer&gt; frequency = new LinkedHashMap&lt;Character, Integer&gt;();
+    for (char ch : s.toCharArray()) frequency.put(ch, frequency.containsKey(ch) ? frequency.get(ch) + 1 : 1);
+    List&lt;Character&gt; duplicates = new ArrayList&lt;Character&gt;();
+    for (Map.Entry&lt;Character, Integer&gt; e : frequency.entrySet()) if (e.getValue() &gt; 1) duplicates.add(e.getKey());
+    System.out.println(duplicates);
+}
+}
+</code></pre></details>
+<details><summary>Explanation and edge cases</summary>
+<p><b>Approach:</b> Build a frequency map in first-appearance order, then collect keys whose count exceeds one. LinkedHashMap makes output ordering deterministic.</p><p><b>Edge cases:</b> No duplicates returns []. Repeated characters appear only once in the result. This version counts UTF-16 char units; use code points for supplementary characters.</p><p><b>Interview follow-up:</b> Can you find duplicates in one pass? What changes if output order is irrelevant?</p><p><b>Complexity:</b> O(n) expected time and O(k) space for k distinct char values.</p></details>
+</article>
+<article class="question" data-chapter="String Programming" data-type="String" id="q4">
+<div class="qhead"><span class="qnum">Q004</span><span class="tag">String</span></div>
+<h3>Find frequency of each character</h3>
+<p class="problem">Count each character while preserving first-seen order.</p>
+<div class="meta"><span><b>Complexity:</b> O(n) expected time and O(k) space.</span></div>
+<details class="sample-input" open=""><summary>Sample input / test data</summary><pre><code>String s = "aba";</code></pre></details><details class="sample-output" open=""><summary>Expected output</summary><pre><code>{a=2, b=1}</code></pre></details><details open=""><summary><span class="java8">Java 8 complete runnable program</span></summary><pre><code>import java.util.*;
+import java.util.stream.*;
+import java.util.function.*;
+import java.math.*;
+import java.util.regex.*;
+import java.text.*;
+
+public class FindFrequencyOfEachCharacterJava8 {
+
+    public static void main(String[] args) {
+        findFrequencyOfEachCharacter();
+    }
+
+private static void findFrequencyOfEachCharacter() {
+    String s = "aba";
+    Map&lt;Character, Long&gt; counts = s.chars().mapToObj(ch -&gt; (char) ch)
+        .collect(Collectors.groupingBy(Function.identity(), LinkedHashMap::new, Collectors.counting()));
+    System.out.println(counts);
+}
+}
+</code></pre></details>
+<details><summary><span class="java7">Java 7 complete runnable program</span></summary><pre><code>import java.util.*;
+import java.math.*;
+import java.util.regex.*;
+import java.text.*;
+
+public class FindFrequencyOfEachCharacterJava7 {
+
+    public static void main(String[] args) {
+        findFrequencyOfEachCharacter();
+    }
+
+private static void findFrequencyOfEachCharacter() {
+    String s = "aba";
+    Map&lt;Character, Integer&gt; counts = new LinkedHashMap&lt;Character, Integer&gt;();
+    for (char ch : s.toCharArray()) counts.put(ch, counts.containsKey(ch) ? counts.get(ch) + 1 : 1);
+    System.out.println(counts);
+}
+}
+</code></pre></details>
+<details><summary>Explanation and edge cases</summary>
+<p><b>Approach:</b> Each character is used as a map key. The collector counts occurrences and LinkedHashMap preserves the order in which each distinct character first appears.</p><p><b>Edge cases:</b> Empty input produces an empty map. The example treats uppercase and lowercase as different characters; normalize first if case-insensitive counting is required.</p><p><b>Interview follow-up:</b> How would you count words instead of characters? When would a TreeMap be preferable?</p><p><b>Complexity:</b> O(n) expected time and O(k) space.</p></details>
+</article>
+<article class="question" data-chapter="String Programming" data-type="String" id="q5">
+<div class="qhead"><span class="qnum">Q005</span><span class="tag">String</span></div>
+<h3>Find the first non-repeated character</h3>
+<p class="problem">Return the earliest character with frequency one.</p>
+<div class="meta"><span><b>Complexity:</b> O(n) time and O(k) space.</span></div>
+<details class="sample-input" open=""><summary>Sample input / test data</summary><pre><code>String s = "abac";</code></pre></details><details class="sample-output" open=""><summary>Expected output</summary><pre><code>b</code></pre></details><details open=""><summary><span class="java8">Java 8 complete runnable program</span></summary><pre><code>import java.util.*;
+import java.util.stream.*;
+import java.util.function.*;
+import java.math.*;
+import java.util.regex.*;
+import java.text.*;
+
+public class FindFirstNonRepeatedCharacterJava8 {
+
+    public static void main(String[] args) {
+        findFirstNonRepeatedCharacter();
+    }
+
+private static void findFirstNonRepeatedCharacter() {
+    String s = "abac";
+    Map&lt;Character, Long&gt; counts = s.chars().mapToObj(ch -&gt; (char) ch)
+        .collect(Collectors.groupingBy(Function.identity(), LinkedHashMap::new, Collectors.counting()));
+    Character first = counts.entrySet().stream().filter(e -&gt; e.getValue() == 1)
+        .map(Map.Entry::getKey).findFirst().orElse(null);
+    System.out.println(first);
+}
+}
+</code></pre></details>
+<details><summary><span class="java7">Java 7 complete runnable program</span></summary><pre><code>import java.util.*;
+import java.math.*;
+import java.util.regex.*;
+import java.text.*;
+
+public class FindFirstNonRepeatedCharacterJava7 {
+
+    public static void main(String[] args) {
+        findFirstNonRepeatedCharacter();
+    }
+
+private static void findFirstNonRepeatedCharacter() {
+    String s = "abac";
+    Map&lt;Character, Integer&gt; counts = new LinkedHashMap&lt;Character, Integer&gt;();
+    for (char ch : s.toCharArray()) counts.put(ch, counts.containsKey(ch) ? counts.get(ch) + 1 : 1);
+    Character first = null;
+    for (Map.Entry&lt;Character, Integer&gt; e : counts.entrySet()) if (e.getValue() == 1) { first = e.getKey(); break; }
+    System.out.println(first);
+}
+}
+</code></pre></details>
+<details><summary>Explanation and edge cases</summary>
+<p><b>Approach:</b> Count characters using insertion order, then return the first map entry with count one. This is a two-pass solution: counting first, selection second.</p><p><b>Edge cases:</b> If every character repeats, output is null. An empty string also returns null. Character comparison is case-sensitive.</p><p><b>Interview follow-up:</b> Can this be solved in one pass with an index or queue? What is the trade-off?</p><p><b>Complexity:</b> O(n) time and O(k) space.</p></details>
+</article>
+<article class="question" data-chapter="String Programming" data-type="String" id="q6">
+<div class="qhead"><span class="qnum">Q006</span><span class="tag">String</span></div>
+<h3>Find the first repeated character</h3>
+<p class="problem">Return the first character whose second occurrence is encountered.</p>
+<div class="meta"><span><b>Complexity:</b> O(n) expected time and O(k) space.</span></div>
+<details class="sample-input" open=""><summary>Sample input / test data</summary><pre><code>String s = "swiss";</code></pre></details><details class="sample-output" open=""><summary>Expected output</summary><pre><code>s</code></pre></details><details open=""><summary><span class="java8">Java 8 complete runnable program</span></summary><pre><code>import java.util.*;
+import java.util.stream.*;
+import java.util.function.*;
+import java.math.*;
+import java.util.regex.*;
+import java.text.*;
+
+public class FindFirstRepeatedCharacterJava8 {
+
+    public static void main(String[] args) {
+        findFirstRepeatedCharacter();
+    }
+
+private static void findFirstRepeatedCharacter() {
+    String s = "swiss";
+    Set&lt;Character&gt; seen = new HashSet&lt;Character&gt;();
+    Character repeated = s.chars().mapToObj(ch -&gt; (char) ch)
+        .filter(ch -&gt; !seen.add(ch)).findFirst().orElse(null);
+    System.out.println(repeated);
+}
+}
+</code></pre></details>
+<details><summary><span class="java7">Java 7 complete runnable program</span></summary><pre><code>import java.util.*;
+import java.math.*;
+import java.util.regex.*;
+import java.text.*;
+
+public class FindFirstRepeatedCharacterJava7 {
+
+    public static void main(String[] args) {
+        findFirstRepeatedCharacter();
+    }
+
+private static void findFirstRepeatedCharacter() {
+    String s = "swiss";
+    Set&lt;Character&gt; seen = new HashSet&lt;Character&gt;();
+    Character repeated = null;
+    for (char ch : s.toCharArray()) if (!seen.add(ch)) { repeated = ch; break; }
+    System.out.println(repeated);
+}
+}
+</code></pre></details>
+<details><summary>Explanation and edge cases</summary>
+<p><b>Approach:</b> Scan characters from left to right and maintain a set of previously seen values. The first failed add identifies the character whose second occurrence is encountered earliest. The Java 8 stream is sequential because the set is stateful.</p><p><b>Edge cases:</b> No repeated character returns null. Do not convert this stream to parallel: the mutable seen set and encounter-order requirement make that unsafe.</p><p><b>Interview follow-up:</b> How does this differ from the first character whose total frequency is greater than one? Can LinkedHashSet help?</p><p><b>Complexity:</b> O(n) expected time and O(k) space.</p></details>
+</article>
+<article class="question" data-chapter="String Programming" data-type="String" id="q7">
+<div class="qhead"><span class="qnum">Q007</span><span class="tag">String</span></div>
+<h3>Check whether a string is a palindrome</h3>
+<p class="problem">Compare characters from both ends.</p>
+<div class="meta"><span><b>Complexity:</b> O(n) time and O(1) auxiliary space.</span></div>
+<details class="sample-input" open=""><summary>Sample input / test data</summary><pre><code>String s = "level";</code></pre></details><details class="sample-output" open=""><summary>Expected output</summary><pre><code>true</code></pre></details><details open=""><summary><span class="java8">Java 8 complete runnable program</span></summary><pre><code>import java.util.*;
+import java.util.stream.*;
+import java.util.function.*;
+import java.math.*;
+import java.util.regex.*;
+import java.text.*;
+
+public class CheckWhetherStringIsPalindromeJava8 {
+
+    public static void main(String[] args) {
+        checkWhetherStringIsPalindrome();
+    }
+
+private static void checkWhetherStringIsPalindrome() {
+    String s = "level";
+    boolean palindrome = IntStream.range(0, s.length() / 2)
+        .allMatch(i -&gt; s.charAt(i) == s.charAt(s.length() - 1 - i));
+    System.out.println(palindrome);
+}
+}
+</code></pre></details>
+<details><summary><span class="java7">Java 7 complete runnable program</span></summary><pre><code>import java.util.*;
+import java.math.*;
+import java.util.regex.*;
+import java.text.*;
+
+public class CheckWhetherStringIsPalindromeJava7 {
+
+    public static void main(String[] args) {
+        checkWhetherStringIsPalindrome();
+    }
+
+private static void checkWhetherStringIsPalindrome() {
+    String s = "level";
+    boolean palindrome = true;
+    for (int i = 0, j = s.length() - 1; i &lt; j; i++, j--)
+        if (s.charAt(i) != s.charAt(j)) { palindrome = false; break; }
+    System.out.println(palindrome);
+}
+}
+</code></pre></details>
+<details><summary>Explanation and edge cases</summary>
+<p><b>Approach:</b> Only the first half needs checking. Each character at index i must equal the mirrored character at length minus one minus i. allMatch stops on the first mismatch.</p><p><b>Edge cases:</b> Empty and one-character strings are palindromes. This is an exact, case-sensitive comparison; punctuation and case normalization are handled in S018.</p><p><b>Interview follow-up:</b> How do you make this case-insensitive? How does the answer change for Unicode code points?</p><p><b>Complexity:</b> O(n) time and O(1) auxiliary space.</p></details>
+</article>
+<article class="question" data-chapter="String Programming" data-type="String" id="q8">
+<div class="qhead"><span class="qnum">Q008</span><span class="tag">String</span></div>
+<h3>Count vowels and consonants</h3>
+<p class="problem">Count English alphabet vowels and consonants; ignore non-letters.</p>
+<div class="meta"><span><b>Complexity:</b> O(n) time and O(n) space for the normalized String; a per-character case fold can avoid this copy.</span></div>
+<details class="sample-input" open=""><summary>Sample input / test data</summary><pre><code>String s = "Java 8";</code></pre></details><details class="sample-output" open=""><summary>Expected output</summary><pre><code>vowels=2, consonants=2</code></pre></details><details open=""><summary><span class="java8">Java 8 complete runnable program</span></summary><pre><code>import java.util.*;
+import java.util.stream.*;
+import java.util.function.*;
+import java.math.*;
+import java.util.regex.*;
+import java.text.*;
+
+public class CountVowelsAndConsonantsJava8 {
+
+    public static void main(String[] args) {
+        countVowelsAndConsonants();
+    }
+
+private static void countVowelsAndConsonants() {
+    String s = "Java 8".toLowerCase(Locale.ROOT); long vowels = 0, consonants = 0;
+    for (char ch : s.toCharArray()) if (ch &gt;= 'a' &amp;&amp; ch &lt;= 'z') {
+        if ("aeiou".indexOf(ch) &gt;= 0) vowels++; else consonants++;
+    }
+    System.out.println("vowels=" + vowels + ", consonants=" + consonants);
+}
+}
+</code></pre></details>
+<details><summary><span class="java7">Java 7 complete runnable program</span></summary><pre><code>import java.util.*;
+import java.math.*;
+import java.util.regex.*;
+import java.text.*;
+
+public class CountVowelsAndConsonantsJava7 {
+
+    public static void main(String[] args) {
+        countVowelsAndConsonants();
+    }
+
+private static void countVowelsAndConsonants() {
+    String s = "Java 8".toLowerCase(Locale.ROOT); long vowels = 0, consonants = 0;
+    for (char ch : s.toCharArray()) if (ch &gt;= 'a' &amp;&amp; ch &lt;= 'z') {
+        if ("aeiou".indexOf(ch) &gt;= 0) vowels++; else consonants++;
+    }
+    System.out.println("vowels=" + vowels + ", consonants=" + consonants);
+}
+}
+</code></pre></details>
+<details><summary>Explanation and edge cases</summary>
+<p><b>Approach:</b> Normalize case using Locale.ROOT. Inspect only English letters a-z; count a/e/i/o/u as vowels and the remaining English letters as consonants.</p><p><b>Edge cases:</b> Digits, spaces, punctuation and non-ASCII letters are ignored. This is an English-vowel exercise, not a general linguistic classifier.</p><p><b>Interview follow-up:</b> How would you count Unicode letters? How would you include y as a sometimes-vowel?</p><p><b>Complexity:</b> O(n) time and O(1) auxiliary space.</p></details>
+</article>
+<article class="question" data-chapter="String Programming" data-type="String" id="q9">
+<div class="qhead"><span class="qnum">Q009</span><span class="tag">String</span></div>
+<h3>Remove duplicate characters preserving order</h3>
+<p class="problem">Keep only the first occurrence of each character.</p>
+<div class="meta"><span><b>Complexity:</b> O(n) expected time and O(k) auxiliary/output space.</span></div>
+<details class="sample-input" open=""><summary>Sample input / test data</summary><pre><code>String s = "banana";</code></pre></details><details class="sample-output" open=""><summary>Expected output</summary><pre><code>ban</code></pre></details><details open=""><summary><span class="java8">Java 8 complete runnable program</span></summary><pre><code>import java.util.*;
+import java.util.stream.*;
+import java.util.function.*;
+import java.math.*;
+import java.util.regex.*;
+import java.text.*;
+
+public class RemoveDuplicateCharactersPreservingOrderJava8 {
+
+    public static void main(String[] args) {
+        removeDuplicateCharactersPreservingOrder();
+    }
+
+private static void removeDuplicateCharactersPreservingOrder() {
+    String s = "banana";
+    String result = s.chars().mapToObj(ch -&gt; (char) ch).distinct()
+        .map(String::valueOf).collect(Collectors.joining());
+    System.out.println(result);
+}
+}
+</code></pre></details>
+<details><summary><span class="java7">Java 7 complete runnable program</span></summary><pre><code>import java.util.*;
+import java.math.*;
+import java.util.regex.*;
+import java.text.*;
+
+public class RemoveDuplicateCharactersPreservingOrderJava7 {
+
+    public static void main(String[] args) {
+        removeDuplicateCharactersPreservingOrder();
+    }
+
+private static void removeDuplicateCharactersPreservingOrder() {
+    String s = "banana";
+    Set&lt;Character&gt; seen = new LinkedHashSet&lt;Character&gt;();
+    for (char ch : s.toCharArray()) seen.add(ch);
+    StringBuilder result = new StringBuilder();
+    for (Character ch : seen) result.append(ch.charValue());
+    System.out.println(result.toString());
+}
+}
+</code></pre></details>
+<details><summary>Explanation and edge cases</summary>
+<p><b>Approach:</b> distinct() on an ordered stream retains the first occurrence of each value. The Java 7 version uses LinkedHashSet for the same first-seen ordering.</p><p><b>Edge cases:</b> Empty input produces an empty string. Comparison is case-sensitive: A and a are different characters.</p><p><b>Interview follow-up:</b> What changes if output order does not matter? How would you make it case-insensitive?</p><p><b>Complexity:</b> O(n) expected time and O(k) auxiliary/output space.</p></details>
+</article>
+<article class="question" data-chapter="String Programming" data-type="String" id="q10">
+<div class="qhead"><span class="qnum">Q010</span><span class="tag">String</span></div>
+<h3>Find maximum occurring character</h3>
+<p class="problem">Return the character with highest frequency; ties use first appearance.</p>
+<div class="meta"><span><b>Complexity:</b> O(n) expected time and O(k) space.</span></div>
+<details class="sample-input" open=""><summary>Sample input / test data</summary><pre><code>String s = "hello";</code></pre></details><details class="sample-output" open=""><summary>Expected output</summary><pre><code>l (frequency=2)</code></pre></details><details open=""><summary><span class="java8">Java 8 complete runnable program</span></summary><pre><code>import java.util.*;
+import java.util.stream.*;
+import java.util.function.*;
+import java.math.*;
+import java.util.regex.*;
+import java.text.*;
+
+public class FindMaximumOccurringCharacterJava8 {
+
+    public static void main(String[] args) {
+        findMaximumOccurringCharacter();
+    }
+
+private static void findMaximumOccurringCharacter() {
+    String s = "hello";
+    Map&lt;Character, Long&gt; counts = s.chars().mapToObj(ch -&gt; (char) ch)
+        .collect(Collectors.groupingBy(Function.identity(), LinkedHashMap::new, Collectors.counting()));
+    Character most = counts.entrySet().stream()
+        .max((a, b) -&gt; Long.compare(a.getValue(), b.getValue()))
+        .map(Map.Entry::getKey).orElse(null);
+    System.out.println(most == null ? "null" : most + " (frequency=" + counts.get(most) + ")");
+}
+}
+</code></pre></details>
+<details><summary><span class="java7">Java 7 complete runnable program</span></summary><pre><code>import java.util.*;
+import java.math.*;
+import java.util.regex.*;
+import java.text.*;
+
+public class FindMaximumOccurringCharacterJava7 {
+
+    public static void main(String[] args) {
+        findMaximumOccurringCharacter();
+    }
+
+private static void findMaximumOccurringCharacter() {
+    String s = "hello";
+    Map&lt;Character, Integer&gt; counts = new LinkedHashMap&lt;Character, Integer&gt;();
+    for (char ch : s.toCharArray()) counts.put(ch, counts.containsKey(ch) ? counts.get(ch) + 1 : 1);
+    Character most = null; int max = 0;
+    for (Map.Entry&lt;Character, Integer&gt; e : counts.entrySet()) if (e.getValue() &gt; max) { most = e.getKey(); max = e.getValue(); }
+    System.out.println(most == null ? "null" : most + " (frequency=" + max + ")");
+}
+}
+</code></pre></details>
+<details><summary>Explanation and edge cases</summary>
+<p><b>Approach:</b> Count in a LinkedHashMap, then select the entry with the largest count. Because ties do not replace the current winner, first appearance wins deterministically. This avoids calling indexOf inside a comparator.</p><p><b>Edge cases:</b> Empty input returns null. If multiple characters share the maximum frequency, the earliest distinct character in the source wins.</p><p><b>Interview follow-up:</b> How would you return all characters tied for maximum frequency? Can a single pass find the winner?</p><p><b>Complexity:</b> O(n) expected time and O(k) space.</p></details>
+</article>
+<article class="question" data-chapter="String Programming" data-type="String" id="q11">
+<div class="qhead"><span class="qnum">Q011</span><span class="tag">String</span></div>
+<h3>Find second most frequently occurring character</h3>
+<p class="problem">Rank distinct characters by frequency; ties follow first appearance.</p>
+<div class="meta"><span><b>Complexity:</b> O(n + k log k) time and O(k) space for k distinct characters.</span></div>
+<details class="sample-input" open=""><summary>Sample input / test data</summary><pre><code>String s = "aabbbc";</code></pre></details><details class="sample-output" open=""><summary>Expected output</summary><pre><code>a (frequency=2)</code></pre></details><details open=""><summary><span class="java8">Java 8 complete runnable program</span></summary><pre><code>import java.util.*;
+import java.util.stream.*;
+import java.util.function.*;
+import java.math.*;
+import java.util.regex.*;
+import java.text.*;
+
+public class FindSecondMostFrequentlyOccurringCharacterJava8 {
+
+    public static void main(String[] args) {
+        findSecondMostFrequentlyOccurringCharacter();
+    }
+
+private static void findSecondMostFrequentlyOccurringCharacter() {
+    String s = "aabbbc";
+    Map&lt;Character, Long&gt; counts = s.chars().mapToObj(ch -&gt; (char) ch)
+        .collect(Collectors.groupingBy(Function.identity(), LinkedHashMap::new, Collectors.counting()));
+    Character second = counts.entrySet().stream()
+        .sorted((a, b) -&gt; Long.compare(b.getValue(), a.getValue()))
+        .skip(1).map(Map.Entry::getKey).findFirst().orElse(null);
+    System.out.println(second == null ? "null" : second + " (frequency=" + counts.get(second) + ")");
+}
+}
+</code></pre></details>
+<details><summary><span class="java7">Java 7 complete runnable program</span></summary><pre><code>import java.util.*;
+import java.math.*;
+import java.util.regex.*;
+import java.text.*;
+
+public class FindSecondMostFrequentlyOccurringCharacterJava7 {
+
+    public static void main(String[] args) {
+        findSecondMostFrequentlyOccurringCharacter();
+    }
+
+private static void findSecondMostFrequentlyOccurringCharacter() {
+    String s = "aabbbc";
+    Map&lt;Character, Integer&gt; counts = new LinkedHashMap&lt;Character, Integer&gt;();
+    for (char ch : s.toCharArray()) counts.put(ch, counts.containsKey(ch) ? counts.get(ch) + 1 : 1);
+    List&lt;Character&gt; keys = new ArrayList&lt;Character&gt;(counts.keySet());
+    Collections.sort(keys, new Comparator&lt;Character&gt;() {
+        public int compare(Character a, Character b) { return Integer.compare(counts.get(b), counts.get(a)); }
+    });
+    Character second = keys.size() &gt; 1 ? keys.get(1) : null;
+    System.out.println(second == null ? "null" : second + " (frequency=" + counts.get(second) + ")");
+}
+}
+</code></pre></details>
+<details><summary>Explanation and edge cases</summary>
+<p><b>Approach:</b> Count each distinct character, then sort by descending frequency. The ordered map and stable sort preserve first appearance when frequencies tie. The second entry in the ranking is returned; this is the second-ranked distinct character, not the second occurrence.</p><p><b>Edge cases:</b> Fewer than two distinct characters returns null. For aabbbc the frequencies are b=3, a=2, c=1, so the correct answer is a (not b).</p><p><b>Interview follow-up:</b> How would you return the top K characters? How can a heap reduce sorting cost?</p><p><b>Complexity:</b> O(n + k log k) time and O(k) space for k distinct characters.</p></details>
+</article>
+<article class="question" data-chapter="String Programming" data-type="String" id="q12">
+<div class="qhead"><span class="qnum">Q012</span><span class="tag">String</span></div>
+<h3>Count words and their frequency</h3>
+<p class="problem">Split on whitespace and count normalized tokens.</p>
+<div class="meta"><span><b>Complexity:</b> O(n) expected time in total input characters and O(k) space for distinct words.</span></div>
+<details class="sample-input" open=""><summary>Sample input / test data</summary><pre><code>String sentence = "java 8 java";</code></pre></details><details class="sample-output" open=""><summary>Expected output</summary><pre><code>{java=2, 8=1}</code></pre></details><details open=""><summary><span class="java8">Java 8 complete runnable program</span></summary><pre><code>import java.util.*;
+import java.util.stream.*;
+import java.util.function.*;
+import java.math.*;
+import java.util.regex.*;
+import java.text.*;
+
+public class CountWordsAndTheirFrequencyJava8 {
+
+    public static void main(String[] args) {
+        countWordsAndTheirFrequency();
+    }
+
+private static void countWordsAndTheirFrequency() {
+    String sentence = "java 8 java";
+    Map&lt;String, Long&gt; counts = new LinkedHashMap&lt;String, Long&gt;();
+    if (!sentence.trim().isEmpty()) {
+        counts = Arrays.stream(sentence.trim().split("\\s+"))
+            .map(w -&gt; w.toLowerCase(Locale.ROOT))
+            .collect(Collectors.groupingBy(Function.identity(), LinkedHashMap::new, Collectors.counting()));
+    }
+    System.out.println(counts);
+}
+}
+</code></pre></details>
+<details><summary><span class="java7">Java 7 complete runnable program</span></summary><pre><code>import java.util.*;
+import java.math.*;
+import java.util.regex.*;
+import java.text.*;
+
+public class CountWordsAndTheirFrequencyJava7 {
+
+    public static void main(String[] args) {
+        countWordsAndTheirFrequency();
+    }
+
+private static void countWordsAndTheirFrequency() {
+    String sentence = "java 8 java";
+    Map&lt;String, Integer&gt; counts = new LinkedHashMap&lt;String, Integer&gt;();
+    String trimmed = sentence.trim();
+    if (!trimmed.isEmpty()) for (String word : trimmed.split("\\s+")) {
+        String key = word.toLowerCase(Locale.ROOT);
+        counts.put(key, counts.containsKey(key) ? counts.get(key) + 1 : 1);
+    }
+    System.out.println(counts);
+}
+}
+</code></pre></details>
+<details><summary>Explanation and edge cases</summary>
+<p><b>Approach:</b> Normalize whitespace by trimming and splitting on one-or-more whitespace characters. Convert each token with Locale.ROOT and count using LinkedHashMap so output follows first appearance.</p><p><b>Edge cases:</b> Whitespace-only input returns an empty map. Punctuation is retained as part of tokens; if punctuation must be stripped, define tokenization rules first.</p><p><b>Interview follow-up:</b> How would you count words case-sensitively? How would you remove punctuation before tokenization?</p><p><b>Complexity:</b> O(n) expected time in total input characters and O(k) space for distinct words.</p></details>
+</article>
+<article class="question" data-chapter="String Programming" data-type="String" id="q13">
+<div class="qhead"><span class="qnum">Q013</span><span class="tag">String</span></div>
+<h3>Find duplicate words in a sentence</h3>
+<p class="problem">Return words occurring more than once.</p>
+<div class="meta"><span><b>Complexity:</b> O(n) expected time and O(k) space.</span></div>
+<details class="sample-input" open=""><summary>Sample input / test data</summary><pre><code>String sentence = "Java is Java";</code></pre></details><details class="sample-output" open=""><summary>Expected output</summary><pre><code>[java]</code></pre></details><details open=""><summary><span class="java8">Java 8 complete runnable program</span></summary><pre><code>import java.util.*;
+import java.util.stream.*;
+import java.util.function.*;
+import java.math.*;
+import java.util.regex.*;
+import java.text.*;
+
+public class FindDuplicateWordsInSentenceJava8 {
+
+    public static void main(String[] args) {
+        findDuplicateWordsInSentence();
+    }
+
+private static void findDuplicateWordsInSentence() {
+    String sentence = "Java is Java";
+    List&lt;String&gt; duplicates = new ArrayList&lt;String&gt;();
+    if (!sentence.trim().isEmpty()) {
+        Map&lt;String, Long&gt; counts = Arrays.stream(sentence.toLowerCase(Locale.ROOT).trim().split("\\s+"))
+            .collect(Collectors.groupingBy(Function.identity(), LinkedHashMap::new, Collectors.counting()));
+        duplicates = counts.entrySet().stream().filter(e -&gt; e.getValue() &gt; 1)
+            .map(Map.Entry::getKey).collect(Collectors.toList());
+    }
+    System.out.println(duplicates);
+}
+}
+</code></pre></details>
+<details><summary><span class="java7">Java 7 complete runnable program</span></summary><pre><code>import java.util.*;
+import java.math.*;
+import java.util.regex.*;
+import java.text.*;
+
+public class FindDuplicateWordsInSentenceJava7 {
+
+    public static void main(String[] args) {
+        findDuplicateWordsInSentence();
+    }
+
+private static void findDuplicateWordsInSentence() {
+    String sentence = "Java is Java";
+    Map&lt;String, Integer&gt; counts = new LinkedHashMap&lt;String, Integer&gt;();
+    String trimmed = sentence.toLowerCase(Locale.ROOT).trim();
+    if (!trimmed.isEmpty()) for (String word : trimmed.split("\\s+"))
+        counts.put(word, counts.containsKey(word) ? counts.get(word) + 1 : 1);
+    List&lt;String&gt; duplicates = new ArrayList&lt;String&gt;();
+    for (Map.Entry&lt;String, Integer&gt; e : counts.entrySet()) if (e.getValue() &gt; 1) duplicates.add(e.getKey());
+    System.out.println(duplicates);
+}
+}
+</code></pre></details>
+<details><summary>Explanation and edge cases</summary>
+<p><b>Approach:</b> Normalize case, tokenize, count each token in insertion order, then select tokens with count greater than one. This reports each duplicate word once.</p><p><b>Edge cases:</b> Empty or whitespace-only input returns []. Punctuation remains attached to words under this tokenization rule.</p><p><b>Interview follow-up:</b> How would you treat Java and java as different words? How would you report duplicate positions?</p><p><b>Complexity:</b> O(n) expected time and O(k) space.</p></details>
+</article>
+<article class="question" data-chapter="String Programming" data-type="String" id="q14">
+<div class="qhead"><span class="qnum">Q014</span><span class="tag">String</span></div>
+<h3>Find longest and shortest words</h3>
+<p class="problem">Find longest and shortest tokens; ties keep first occurrence.</p>
+<div class="meta"><span><b>Complexity:</b> O(n) time and O(w) token storage for w words.</span></div>
+<details class="sample-input" open=""><summary>Sample input / test data</summary><pre><code>String sentence = "Java streams is fun";</code></pre></details><details class="sample-output" open=""><summary>Expected output</summary><pre><code>longest=streams, shortest=is</code></pre></details><details open=""><summary><span class="java8">Java 8 complete runnable program</span></summary><pre><code>import java.util.*;
+import java.util.stream.*;
+import java.util.function.*;
+import java.math.*;
+import java.util.regex.*;
+import java.text.*;
+
+public class FindLongestAndShortestWordsJava8 {
+
+    public static void main(String[] args) {
+        findLongestAndShortestWords();
+    }
+
+private static void findLongestAndShortestWords() {
+    String sentence = "Java streams is fun";
+    List&lt;String&gt; words = sentence.trim().isEmpty() ? Collections.&lt;String&gt;emptyList() : Arrays.asList(sentence.trim().split("\\s+"));
+    String longest = words.stream().max(Comparator.comparingInt(String::length)).orElse(null);
+    String shortest = words.stream().min(Comparator.comparingInt(String::length)).orElse(null);
+    System.out.println("longest=" + longest + ", shortest=" + shortest);
+}
+}
+</code></pre></details>
+<details><summary><span class="java7">Java 7 complete runnable program</span></summary><pre><code>import java.util.*;
+import java.math.*;
+import java.util.regex.*;
+import java.text.*;
+
+public class FindLongestAndShortestWordsJava7 {
+
+    public static void main(String[] args) {
+        findLongestAndShortestWords();
+    }
+
+private static void findLongestAndShortestWords() {
+    String sentence = "Java streams is fun";
+    String trimmed = sentence.trim(); String longest = null, shortest = null;
+    if (!trimmed.isEmpty()) for (String word : trimmed.split("\\s+")) {
+        if (longest == null || word.length() &gt; longest.length()) longest = word;
+        if (shortest == null || word.length() &lt; shortest.length()) shortest = word;
+    }
+    System.out.println("longest=" + longest + ", shortest=" + shortest);
+}
+}
+</code></pre></details>
+<details><summary>Explanation and edge cases</summary>
+<p><b>Approach:</b> Tokenize the sentence, then find the maximum and minimum by word length. The stream min/max operations preserve a first encountered item when the comparator considers a tie equal.</p><p><b>Edge cases:</b> Whitespace-only input returns null for both values. Equal-length ties keep the first word in the sentence.</p><p><b>Interview follow-up:</b> How would you return every tied longest word? How would punctuation affect word length?</p><p><b>Complexity:</b> O(n) time and O(w) token storage for w words.</p></details>
+</article>
+<article class="question" data-chapter="String Programming" data-type="String" id="q15">
+<div class="qhead"><span class="qnum">Q015</span><span class="tag">String</span></div>
+<h3>Group anagrams from a list of strings</h3>
+<p class="problem">Group words that have identical sorted-character signatures.</p>
+<div class="meta"><span><b>Complexity:</b> O(n × m log m) time for n words of average length m; O(total characters) storage for signatures and output.</span></div>
+<details class="sample-input" open=""><summary>Sample input / test data</summary><pre><code>List&lt;String&gt; words = Arrays.asList("eat", "tea", "tan", "ate", "nat", "bat");</code></pre></details><details class="sample-output" open=""><summary>Expected output</summary><pre><code>[[eat, tea, ate], [tan, nat], [bat]]</code></pre></details><details open=""><summary><span class="java8">Java 8 complete runnable program</span></summary><pre><code>import java.util.*;
+import java.util.stream.*;
+import java.util.function.*;
+import java.math.*;
+import java.util.regex.*;
+import java.text.*;
+
+public class GroupAnagramsListOfStringsJava8 {
+
+    public static void main(String[] args) {
+        groupAnagramsListOfStrings();
+    }
+
+private static void groupAnagramsListOfStrings() {
+    List&lt;String&gt; words = Arrays.asList("eat", "tea", "tan", "ate", "nat", "bat");
+    Map&lt;String, List&lt;String&gt;&gt; groups = words.stream().collect(Collectors.groupingBy(
+        w -&gt; signature(w), LinkedHashMap::new, Collectors.toList()));
+    System.out.println(new ArrayList&lt;List&lt;String&gt;&gt;(groups.values()));
+}
+static String signature(String word) {
+    char[] chars = word.toLowerCase(Locale.ROOT).toCharArray();
+    Arrays.sort(chars);
+    return new String(chars);
+}
+}
+</code></pre></details>
+<details><summary><span class="java7">Java 7 complete runnable program</span></summary><pre><code>import java.util.*;
+import java.math.*;
+import java.util.regex.*;
+import java.text.*;
+
+public class GroupAnagramsListOfStringsJava7 {
+
+    public static void main(String[] args) {
+        groupAnagramsListOfStrings();
+    }
+
+private static void groupAnagramsListOfStrings() {
+    List&lt;String&gt; words = Arrays.asList("eat", "tea", "tan", "ate", "nat", "bat");
+    Map&lt;String, List&lt;String&gt;&gt; groups = new LinkedHashMap&lt;String, List&lt;String&gt;&gt;();
+    for (String word : words) {
+        char[] chars = word.toLowerCase(Locale.ROOT).toCharArray(); Arrays.sort(chars);
+        String key = new String(chars);
+        if (!groups.containsKey(key)) groups.put(key, new ArrayList&lt;String&gt;());
+        groups.get(key).add(word);
+    }
+    System.out.println(new ArrayList&lt;List&lt;String&gt;&gt;(groups.values()));
+}
+}
+</code></pre></details>
+<details><summary>Explanation and edge cases</summary>
+<p><b>Approach:</b> Sort the characters of each word to create a canonical signature. Words with the same signature are anagrams. LinkedHashMap preserves the order in which each group first appears; each group preserves input order.</p><p><b>Edge cases:</b> Empty input returns no groups. Empty strings group together. This example is case-insensitive for signatures but preserves original words in output. Null words are not allowed.</p><p><b>Interview follow-up:</b> Can you group anagrams in O(total characters) using frequency signatures for lowercase English letters? What are the memory trade-offs?</p><p><b>Complexity:</b> O(n × m log m) time for n words of average length m; O(total characters) storage for signatures and output.</p></details>
+</article>
+<h3 class="group-title" id="string-group-a">Group A – Fundamentals and Manipulation (Q016–Q025)</h3><p class="group-subtitle">Core string transformations, two-pointer scans, subsequence checks and normalization.</p><article class="question" data-chapter="String Programming" data-type="String" id="q16"><div class="qhead"><span class="qnum">Q016</span><span class="tag">String</span></div><h3>Check whether two strings are anagrams</h3><p class="problem">Determine whether two strings contain the same letters, ignoring case and non-alphanumeric characters.</p><div class="meta"><span><b>Complexity:</b> O(n log n + m log m) time; O(n + m) auxiliary space.</span></div><details class="sample-input"><summary>Sample input / test data</summary><pre><code>String first = "Dormitory";
+String second = "Dirty room";</code></pre></details><details class="sample-output"><summary>Expected output</summary><pre><code>true</code></pre></details><details open=""><summary><span class="java8">Java 8 complete runnable program</span></summary><pre><code>import java.util.*;
+import java.util.stream.*;
+import java.util.function.*;
+import java.math.*;
+import java.util.regex.*;
+import java.text.*;
+
+public class CheckWhetherTwoStringsAreAnagramsJava8 {
+
+    public static void main(String[] args) {
+        checkWhetherTwoStringsAreAnagrams();
+    }
+
+private static void checkWhetherTwoStringsAreAnagrams() {
+    String first = "Dormitory", second = "Dirty room";
+    if (first == null || second == null) throw new IllegalArgumentException("strings must not be null");
+    char[] a = normalize(first), b = normalize(second);
+    Arrays.sort(a); Arrays.sort(b);
+    System.out.println(Arrays.equals(a, b));
+}
+static char[] normalize(String s) {
+    StringBuilder cleaned = new StringBuilder();
+    for (char c : s.toCharArray()) if (Character.isLetterOrDigit(c)) cleaned.append(Character.toLowerCase(c));
+    char[] result = new char[cleaned.length()];
+    for (int i = 0; i &lt; cleaned.length(); i++) result[i] = cleaned.charAt(i);
+    return result;
+}
+}
+</code></pre></details><details><summary><span class="java7">Java 7 complete runnable program</span></summary><pre><code>import java.util.*;
+import java.math.*;
+import java.util.regex.*;
+import java.text.*;
+
+public class CheckWhetherTwoStringsAreAnagramsJava7 {
+
+    public static void main(String[] args) {
+        checkWhetherTwoStringsAreAnagrams();
+    }
+
+private static void checkWhetherTwoStringsAreAnagrams() {
+    String first = "Dormitory", second = "Dirty room";
+    if (first == null || second == null) throw new IllegalArgumentException("strings must not be null");
+    char[] a = normalize(first), b = normalize(second);
+    Arrays.sort(a); Arrays.sort(b);
+    System.out.println(Arrays.equals(a, b));
+}
+static char[] normalize(String s) {
+    StringBuilder cleaned = new StringBuilder();
+    for (char c : s.toCharArray()) if (Character.isLetterOrDigit(c)) cleaned.append(Character.toLowerCase(c));
+    char[] result = new char[cleaned.length()];
+    for (int i = 0; i &lt; cleaned.length(); i++) result[i] = cleaned.charAt(i);
+    return result;
+}
+}
+</code></pre></details><details><summary>Code explanation, edge cases and interview follow-ups</summary><p><b>Approach:</b> Normalize both strings by removing non-alphanumeric characters and lowercasing, sort the resulting UTF-16 char arrays, then compare. Sorting creates equal signatures exactly when the character multisets match.</p><p><b>Edge cases:</b> Null is rejected. Two empty normalized strings are anagrams. This version works on UTF-16 char units; full Unicode normalization/code-point equivalence needs a stronger normalization contract.</p><p><b>Interview follow-up:</b> How would you solve in O(n) with a frequency map? How do you handle accents and Unicode normalization?</p><p><b>Complexity:</b> O(n log n + m log m) time; O(n + m) auxiliary space.</p></details></article><article class="question" data-chapter="String Programming" data-type="String" id="q17"><div class="qhead"><span class="qnum">Q017</span><span class="tag">String</span></div><h3>Check whether one string is a rotation of another</h3><p class="problem">Return true when one string can be obtained by rotating the other without changing character order.</p><div class="meta"><span><b>Complexity:</b> O(n) space for concatenation; typical substring search is efficient in practice, but the simple bound can be O(n²) in a naive model.</span></div><details class="sample-input"><summary>Sample input / test data</summary><pre><code>String original = "waterbottle";
+String candidate = "erbottlewat";</code></pre></details><details class="sample-output"><summary>Expected output</summary><pre><code>true</code></pre></details><details open=""><summary><span class="java8">Java 8 complete runnable program</span></summary><pre><code>import java.util.*;
+import java.util.stream.*;
+import java.util.function.*;
+import java.math.*;
+import java.util.regex.*;
+import java.text.*;
